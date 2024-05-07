@@ -29,14 +29,22 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
           passphrase: ${{ secrets.SSH_PASSPHRASE }} # Use SSH key instead of password
           debug: true
-          # script: |
-          #   cd pms
-
-          #   echo "Installing npm dependencies..."
-          #   npm install
+          script: |
+            # Navigate to your application directory
+            cd /path/to/application
             
-          #   echo "Building the application..."
-          #   npm run build
+            # Install npm dependencies
+            echo "Installing npm dependencies..."
+            npm install
             
-          #   echo "Restarting PM2 processes..."
-          #   pm2 restart all
+            # Install PM2
+            echo "Installing PM2..."
+            npm install -g pm2
+            
+            # Build the application
+            echo "Building the application..."
+            npm run build
+            
+            # Restart PM2 processes
+            echo "Restarting PM2 processes..."
+            pm2 restart all
