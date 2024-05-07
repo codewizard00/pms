@@ -31,7 +31,8 @@ jobs:
           debug: true
           script: |
             # Navigate to your application directory
-            cd /path/to/application
+            cd /pms
+            mkdir hello
             
             # Install npm dependencies
             echo "Installing npm dependencies..."
