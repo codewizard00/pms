@@ -31,7 +31,7 @@ jobs:
           debug: true
           script: |
             # Navigate to your application directory
-            cd /pms
+            cd pms
             mkdir hello
             
             # Install npm dependencies
