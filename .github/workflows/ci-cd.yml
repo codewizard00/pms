@@ -6,22 +6,30 @@ on:
       - main
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
+      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Install Node.js
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # Specify Node.js 20
 
+      # Deploy to Nginx server
       - name: Deploy to Nginx server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
-          password: ${{ secrets.SERVER_PASSWORD }}
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}  # Use SSH key instead of password
           script: |
             cd pms
+            
             echo "Installing npm dependencies..."
             npm install
             
@@ -30,4 +38,3 @@ jobs:
             
             echo "Restarting PM2 processes..."
             pm2 restart all
-            
