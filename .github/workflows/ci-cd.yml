@@ -32,7 +32,8 @@ jobs:
           script: |
             # Navigate to your application directory
             cd pms
-            mkdir hello
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             
             # Install npm dependencies
             echo "Installing npm dependencies..."
