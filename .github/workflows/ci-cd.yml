@@ -21,4 +21,8 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
+          cd pms
+          npm install
+          npm run build
+          pm2 restart all
             
