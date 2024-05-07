@@ -29,14 +29,14 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
           passphrase: ${{ secrets.SSH_PASSPHRASE }} # Use SSH key instead of password
           debug: true
-          script: |
-            cd pms
+          # script: |
+          #   cd pms
+
+          #   echo "Installing npm dependencies..."
+          #   npm install
             
-            echo "Installing npm dependencies..."
-            npm install
+          #   echo "Building the application..."
+          #   npm run build
             
-            echo "Building the application..."
-            npm run build
-            
-            echo "Restarting PM2 processes..."
-            pm2 restart all
+          #   echo "Restarting PM2 processes..."
+          #   pm2 restart all
