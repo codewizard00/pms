@@ -27,6 +27,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}  # Use SSH key instead of password
+          debug: true
           script: |
             cd pms
             
