@@ -30,6 +30,7 @@ jobs:
           debug: true
           script: |
             cd pms
+            
             echo "Installing npm dependencies..."
             npm install
             
