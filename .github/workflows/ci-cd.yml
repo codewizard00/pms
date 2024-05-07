@@ -21,8 +21,13 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-          cd pms
-          npm install
-          npm run build
-          pm2 restart all
+            cd pms
+            echo "Installing npm dependencies..."
+            npm install
+            
+            echo "Building the application..."
+            npm run build
+            
+            echo "Restarting PM2 processes..."
+            pm2 restart all
             
