@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toaster } from './toastify/toaster';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3002/',
+  baseURL: 'http://209.182.232.219:3002/',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',

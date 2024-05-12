@@ -32,7 +32,7 @@ export const register = (data,navigate) => async (dispatch) => {
   dispatch(resgiterStart());
   try {
 
-    const response = await axios.post('http://localhost:3001/register', data)
+    const response = await axios.post('http://209.182.232.219:3001/register', data)
     toaster.success(response.data.message);
     dispatch(registerSuccess(response.data));
     window.location.href = "/signin";
