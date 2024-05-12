@@ -32,6 +32,7 @@ jobs:
           script: |
             # Navigate to your application directory
             cd pms
+            git pull origin main
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             
