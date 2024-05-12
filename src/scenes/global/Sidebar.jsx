@@ -80,7 +80,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  ADMIN TABLE
+                  PMS
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -89,7 +89,7 @@ const Sidebar = () => {
             )}
           </MenuItem>
 
-          {!isCollapsed && (
+          {/* {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
@@ -114,9 +114,16 @@ const Sidebar = () => {
                 </Typography>
               </Box>
             </Box>
-          )}
+          )} */}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Dashboard
+            </Typography>
             <Item
               title="Dashboard"
               to="/"
@@ -139,30 +146,30 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+            {/* <Item
               title="Contacts Information"
               to="/contacts"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
-            <Item
+            /> */}
+            {/* <Item
               title="Invoices Balances"
               to="/invoices"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
 
             <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
+              Create
             </Typography>
             <Item
-              title="Profile Form"
+              title="Create Product"
               to="/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}

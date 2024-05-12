@@ -1,5 +1,5 @@
 import { Box, IconButton, useTheme } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -13,6 +13,13 @@ const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if(!tokens){
+      window.location.href = "/signin"
+    }
+  }, []);
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>

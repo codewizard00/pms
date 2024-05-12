@@ -1,24 +1,37 @@
 import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
-import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
+import { createProductSchema } from "../../utils/validation/createProductSchema";
+import { useDispatch } from "react-redux";
+import { createProduct } from "../../redux/reducers/createProductReducers";
 
 const Form = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const initialValues = {
+    name: "",
+    description: "",
+    product_brand: "",
+    product_selling_price: "",
+    product_mrp: "",
+    category: "",
+    terms_and_conditions:""
+  };
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const dispatch = useDispatch();
+  const handleFormSubmit = (values,{resetForm}) => {
+    dispatch(createProduct(values));
+    resetForm();
   };
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Header title="CREATE NEW PRODUCT" subtitle="" />
 
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        validationSchema={createProductSchema}
       >
         {({
           values,
@@ -39,86 +52,97 @@ const Form = () => {
             >
               <TextField
                 fullWidth
-                variant="filled"
                 type="text"
-                label="First Name"
+                label="Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                value={values.name}
+                name="name"
+                error={!!touched.name && !!errors.name}
+                helperText={touched.name && errors.name}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
-                variant="filled"
                 type="text"
-                label="Last Name"
+                label="Description"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                value={values.description}
+                name="description"
+                error={!!touched.description && !!errors.description}
+                helperText={touched.description && errors.description}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
-                variant="filled"
                 type="text"
-                label="Email"
+                label="Category"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
+                value={values.category}
+                name="category"
+                error={!!touched.category && !!errors.category}
+                helperText={touched.category && errors.category}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
-                variant="filled"
                 type="text"
-                label="Contact Number"
+                label="Selling Price"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
+                value={values.product_selling_price}
+                name="product_selling_price"
+                error={
+                  !!touched.product_selling_price &&
+                  !!errors.product_selling_price
+                }
+                helperText={
+                  touched.product_selling_price && errors.product_selling_price
+                }
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
-                variant="filled"
                 type="text"
-                label="Address 1"
+                label="Market Retail Price"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                value={values.product_mrp}
+                name="product_mrp"
+                error={!!touched.product_mrp && !!errors.product_mrp}
+                helperText={touched.product_mrp && errors.product_mrp}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
-                variant="filled"
                 type="text"
-                label="Address 2"
+                label="Brand"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
+                value={values.product_brand}
+                name="product_brand"
+                error={!!touched.product_brand && !!errors.product_brand}
+                helperText={touched.product_brand && errors.product_brand}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                type="text"
+                label="Terms & Conditions"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.terms_and_conditions}
+                name="terms_and_conditions"
+                error={!!touched.terms_and_conditions && !!errors.terms_and_conditions}
+                helperText={touched.terms_and_conditions && errors.terms_and_conditions}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Create New Product
               </Button>
             </Box>
           </form>
@@ -126,29 +150,6 @@ const Form = () => {
       </Formik>
     </Box>
   );
-};
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
 };
 
 export default Form;

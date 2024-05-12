@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
@@ -6,8 +6,21 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { productList } from "../../redux/reducers/allProductReducers";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AlertDialogSlide from "../../components/dialog";
 
 const Team = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const list = useSelector((state) => state.productList.list);
+  const [id, setId] = useState(0);
+  useEffect(() => {
+    dispatch(productList());
+  }, []);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
@@ -19,49 +32,57 @@ const Team = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
+      field: "product_selling_price",
+      headerName: "Selling Price",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "product_mrp",
+      headerName: "Product MRP",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "product_brand",
+      headerName: "Product Brand",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "category",
+      headerName: "Category",
       flex: 1,
     },
     {
-      field: "accessLevel",
-      headerName: "Access Level",
+      field: "sad",
+      headerName: "Actions",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
+      align: "left",
+      renderCell: ({ row }) => {
         return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : access === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
-            }
-            borderRadius="4px"
-          >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
+          <Box width="60%" m="0 0" p="5px" display="flex" borderRadius="4px">
+            <Button
+              variant="outlined"
+              color="primary"
+              sx={{ ml: "5px" }}
+              onClick={() => {
+                navigate(`/product/${row.id}`);
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              sx={{ ml: "5px" }}
+              onClick={() => {
+                setId(row.id)
+              }}
+            >
+              Delete
+            </Button>
           </Box>
         );
       },
@@ -70,7 +91,24 @@ const Team = () => {
 
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+      <AlertDialogSlide id={id} setId={setId}/>
+      <Box display="flex" justifyContent="space-between">
+        <Header title="Products" subtitle="" />
+        <Box>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ ml: "5px",height:"40px" }}
+          onClick={() => {
+            navigate(`/form`);
+          }}
+          // component={Link}
+          // to={`/products/${access.id}/edit`}
+        >
+          Add New Product
+        </Button>
+        </Box>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -100,7 +138,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        {list && <DataGrid checkboxSelection rows={list} columns={columns} />}
       </Box>
     </Box>
   );
