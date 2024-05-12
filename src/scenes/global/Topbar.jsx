@@ -16,7 +16,7 @@ const Topbar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    if(!tokens){
+    if(!token){
       window.location.href = "/signin"
     }
   }, []);
